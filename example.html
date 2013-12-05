@@ -1,0 +1,67 @@
+<html>
+	<head>
+		<title>select_tree.js Tests</title>
+	</head>
+	<body>
+		
+	    <select
+  			data-callback="populateAuthors"
+  			data-child="books"
+  			data-child-callback="populateBooks"
+  			name="author"
+  			id="author">
+  		</select>
+
+  		<select
+  			data-child="chapters"
+  			data-child-callback="populateChapters"
+  			name="books"
+  			id="books">
+  		</select>
+  		
+  		<select
+  			name="chapters"
+  			id="chapters">
+  		</select>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+		<script src="jquery.selectTree.js"></script>
+		<script>
+		
+			$.populateAuthors = function(callback) {
+				callback([
+					["Hemmingway", 'h'],
+					["Cuelo", 'c']
+				]);
+			};
+			
+			$.populateBooks = function(parentValue, callback) {
+			  var optionList = []
+			  if(parentValue == 'h') {
+				  optionList = [
+			      ['death in the afternoon', 1],
+			      ['the sun also rises', 2]
+			    ]
+			  }
+			  if(parentValue == 'c') {
+				  optionList = [
+			      ['by the river piedra', 1],
+			      ['the alchemist', 2]
+			    ]
+			  }
+			  callback(optionList);
+			};
+			
+			$.populateChapters = function(parentValue, callback) {
+			  var optionList = [];
+			  for(var i=0; i<10; i++) {
+				  optionList.push([i, i])
+			  }
+			  callback(optionList);
+			};
+			
+			var options = {"initialValues": ['h', 1]};
+			$("#author").selectTree(options);
+		</script>
+	</body>
+</html>

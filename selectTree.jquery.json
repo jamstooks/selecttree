@@ -5,13 +5,13 @@
 	"keywords": [
 		"select",
 		"hierarchy",
-		"parent/child",
+		"parent-child",
 		"tree",
 		"ajax",
 		"ui",
 		"callback"
 	],
-	"version": "0.1",
+	"version": "0.1.0",
 	"author": {
 		"name": "Benjamin W Stookey",
 		"url": "https://github.com/jamstooks"

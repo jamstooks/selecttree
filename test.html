@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<title>select_tree.js Tests</title>
+	</head>
+	<body>
+		
+		<select
+			data-callback="populateCreditsets"
+			data-child="category"
+			data-child-callback="populateCategories"
+			name="creditset"
+			id="creditset">
+		</select><br/>
+
+		<select
+			data-child="subcategory"
+			data-child-callback="populateSubcategories"
+			name="category"
+			id="category">
+		</select><br/>
+		
+		<select
+			name="subcategory"
+			data-child="credit"
+			data-child-callback="populateCredits"
+			id="subcategory">
+		</select><br/>
+
+		<select
+			name="credit"
+			data-child="field"
+			data-child-callback="populateFields"
+			id="credit">
+		</select><br/>
+		
+		<select
+			name="field"
+			id="field">
+		</select>
+
+		<script src="../bootstrap/js/jquery.js"></script>
+		<script src="select_tree.js"></script>
+		<script>
+		
+			// Helper function for all other populate methods
+			populateOptions = function(url, callback, dataParser) {
+				console.debug(url);
+				$.ajax({
+				     url: url,
+				     dataType: "json",
+				     context: this,
+				     success: dataParser,
+				     error: function (jqxhr, textStatus, errorThrown) {
+				       console.log(textStatus);
+				     }
+				});
+			};
+		
+			$.populateCreditsets = function(callback) {
+				var url = "/api/0.1/credits/creditset/?format=json";
+				populateOptions(url, callback, function(data){
+					var optionList = [];
+					for(var i=0; i<data.objects.length; i++) {
+						optionList.push([data.objects[i].version, data.objects[i].id]);
+					}
+					callback(optionList);
+				});
+			}
+		
+			$.populateCategories = function(parentValue, callback) {
+				
+				var url = "/api/0.1/credits/creditset/" + parentValue + "/?format=json";
+				populateOptions(url, callback, function(data){
+					var optionList = [];
+					for(var i=0; i<data.categories.length; i++) {
+						optionList.push([data.categories[i].title, data.categories[i].id]);
+					}
+					callback(optionList);
+				});
+			};
+			
+			$.populateSubcategories = function(parentValue, callback) {
+				var url = "/api/0.1/credits/category/" + parentValue + "/";
+				populateOptions(url, callback, function(data){
+					var optionList = [];
+					for(var i=0; i<data.subcategories.length; i++) {
+						optionList.push([data.subcategories[i].title, data.subcategories[i].id]);
+					}
+					callback(optionList);
+				});
+			};
+			
+			$.populateCredits = function(parentValue, callback) {
+				var url = "/api/0.1/credits/subcategory/" + parentValue + "/";
+				populateOptions(url, callback, function(data){
+					var optionList = [];
+					for(var i=0; i<data.credits.length; i++) {
+						optionList.push([data.credits[i].identifier + ": " + data.credits[i].title, data.credits[i].id]);
+					}
+					callback(optionList);
+				});
+			};
+
+			$.populateFields = function(parentValue, callback) {
+				var url = "/api/0.1/credits/credit/" + parentValue + "/";
+				populateOptions(url, callback, function(data){
+					var optionList = [];
+					for(var i=0; i<data.documentation_fields.length; i++) {
+						optionList.push([data.documentation_fields[i].title, data.documentation_fields[i].id]);
+					}
+					callback(optionList);
+				});
+			};
+			
+			var options = {"initialValues": []};
+			$("#creditset").selectTree(options);
+		</script>
+	</body>
+</html>

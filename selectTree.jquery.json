@@ -1,0 +1,37 @@
+{
+	"name": "selectTree",
+	"title": "SelectTree",
+	"description": "Easy way to have multiple parent-child select objects.",
+	"keywords": [
+		"select",
+		"hierarchy",
+		"parent/child",
+		"tree",
+		"ajax",
+		"ui",
+		"callback"
+	],
+	"version": "0.1",
+	"author": {
+		"name": "Benjamin W Stookey",
+		"url": "https://github.com/jamstooks"
+	},
+	"maintainers": [
+		{
+			"name": "Benjamin W Stookey",
+			"url": "https://github.com/jamstooks"
+		}
+	],
+	"licenses": [
+		{
+			"type": "MIT",
+			"url": "https://raw.github.com/jamstooks/selecttree/master/LICENSE.txt"
+		}
+	],
+	"bugs": "https://github.com/jamstooks/selecttree/issues",
+	"homepage": "https://github.com/jamstooks/selecttree/",
+	"docs": "https://github.com/jamstooks/selecttree/",
+	"dependencies": {
+		"jquery": ">=1.7"
+	}
+}
